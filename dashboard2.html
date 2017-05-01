@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Toilet Monitor</title>
+    <link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.10/css/jquery.dataTables.css">
+    <link href="css/cover.css" rel="stylesheet">
+    <script type='text/javascript' src='https://api.mazemap.com/js/v1.2.5/mazemap.min.js'></script>
+  </head>
+  <body>
+
+  <div class="site-wrapper">
+    <div class="site-wrapper-inner">
+      <div class="cover-container">
+
+        <div class="masthead clearfix">
+          <div class="inner">
+            <h3 class="masthead-brand">Toilet Monitor</h3>
+            <nav>
+              <ul class="nav masthead-nav">
+                <li class="active"><a href="dashboard.html">Toilets</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="index.html">Log Out</a></li>
+              </ul>
+            </nav>
+          </div>
+
+          <div class="inner">
+            <h1 class="page-header">Available toilets</h1>
+            <div>
+        			<table id="example" class="display" width="100%">
+                  <thead>
+                    <tr>
+                      <th class="col-md-2">Toilet</th>
+                      <th class="col-md-2">Total visits</th>
+                      <th class="col-md-2">Last cleaning</th>
+                      <th class="col-md-1">Available</th>
+                      <th class="col-md-1"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+
+                  </tbody>
+                  <!-- <tfoot>
+      							<tr>
+                      <th class="col-md-2">Toilet</th>
+                      <th class="col-md-2">Total visits</th>
+                      <th class="col-md-1">Available</th>
+                      <th class="col-md-1"></th>
+      							</tr>
+      						</tfoot> -->
+                </table>
+              </div>
+              <a href="map.html?view=alltoilets" class="btn  btn-primary">View all Toilets</a>
+          </div>
+        </div>
+
+        <div class="mastfoot">
+          <div class="inner">
+            <p>Toilet Monitor © 2017</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.js"></script>
+  <script type="text/javascript" charset="utf8" src="https://datatables.net/download/build/nightly/jquery.dataTables.js"></script>
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/scroller/1.2.0/js/dataTables.scroller.js"></script>
+  <script type="application/javascript">
+    $(document).ready( function () {
+      var table = $('#example').DataTable( {
+        dom: "frtiS",
+        scrollY: 305,
+        columnDefs: [
+            { "orderable": false, "targets": [0, 1, 2, 3, 4] }
+          ],
+        "columns": [
+                null,
+                null,
+                null,
+                { "orderDataType": "dom-text" },
+                null
+            ]
+      } );
+      //return back a sortable column
+      $.fn.dataTable.ext.order['dom-text'] = function  ( settings, col )
+      {
+          return this.api().column( col, {order:'index'} ).nodes().map( function ( td, i ) {
+              return $('input', td).val();
+          } );
+      };
+
+      $('#example_filter > label > input').addClass("form-control")
+      $('#example_filter > label > input').attr("placeholder", "Search")
+      $('#example_filter > label').before("<span class='glyphicon glyphicon-search' aria-hidden='true'></span>");
+
+    } );
+  </script>
+  <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+  <script src="dashboard.js"></script>
+  </body>
+</html>

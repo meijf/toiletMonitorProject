@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Toilet Monitor</title>
+    <link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/cover.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://api.mazemap.com/js/v1.2.5/mazemap.min.css">
+    <script type='text/javascript' src='https://api.mazemap.com/js/v1.2.5/mazemap.min.js'></script>
+  </head>
+  <body>
+
+    <div class="site-wrapper">
+      <div class="site-wrapper-inner">
+        <div class="cover-container">
+
+          <div class="masthead clearfix">
+            <div class="inner">
+              <h3 class="masthead-brand">Toilet Monitor</h3>
+              <nav>
+                <ul class="nav masthead-nav">
+                  <li class="active"><a href="dashboard.html">Toilets</a></li>
+                  <li><a href="about.html">About</a></li>
+                  <li><a href="index.html">Log Out</a></li>
+                </ul>
+              </nav>
+            </div>
+
+            <div class="inner">
+              <h1 class="page-header">Map</h1>
+              <div class="inner" id='mazemap-container' style="width: 100%; height: 400px">
+              </div>
+            </div>
+
+          </div>
+
+          <div class="mastfoot">
+            <div class="inner">
+              <p>Toilet Monitor © 2017</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="map.js"></script>
+
+  </body>
+</html>

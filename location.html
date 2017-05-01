@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Toilet Monitor</title>
+    <link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/cover.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://api.mazemap.com/js/v1.2.5/mazemap.min.css">
+    <script type='text/javascript' src='https://api.mazemap.com/js/v1.2.5/mazemap.min.js'></script>
+  </head>
+  <body>
+
+    <div class="site-wrapper">
+      <div class="site-wrapper-inner">
+        <div class="cover-container">
+
+          <div class="masthead clearfix">
+            <div class="inner">
+              <h3 class="masthead-brand">Toilet Monitor</h3>
+              <nav>
+                <ul class="nav masthead-nav">
+                  <li class="active"><a href="location.html">Your location</a></li>
+                  <li><a href="dashboard2.html">Toilets</a></li>
+                  <li><a href="about.html">About</a></li>
+                  <li><a href="index.html">Log Out</a></li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+
+          <div class="inner cover">
+            <!-- <h1 class="page-header">Choose your location</h1> -->
+            <!-- <div class="inner" id='mazemap-container-location' style="width: 100%; height: 400px"></div> -->
+            <form class="form-signin">
+              <h1 class="cover-heading">Your location</h1>
+              <label for="inputName" class="sr-only">Latitude</label>
+              <input type="latitude" id="inputLatitude" class="form-control" placeholder="Latitude" required autofocus>
+              <label for="inputEmail" class="sr-only">Longitude</label>
+              <input type="longitude" id="inputLongitude" class="form-control" placeholder="Longitude" required>
+              <label for="inputPassword" class="sr-only">Floorlevel</label>
+              <input type="floorlevel" id="inputFloorlevel" class="form-control" placeholder="Floor level#" required>
+
+              <input type="submit" name="submit" class="btn btn-lg btn-primary btn-block" value="Save"/>
+            </form>
+          </div>
+
+          <div class="mastfoot">
+            <div class="inner">
+              <p>Toilet Monitor © 2017</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <!-- <script>
+      var map = Maze.map('mazemap-container-location', { campusloader: false });
+    	//viewing all the toilets on campus
+    	Maze.Instancer.getCampus(1).then(function(campus){
+    		map.fitBounds(campus.getBounds());
+    		campus.addTo(map).setActive().then( function(c) {
+    			map.setZLevel(1);
+    			map.getZLevelControl().show();
+    		});
+    	});
+    </script> -->
+    <script>
+    $(document).ready(function() {
+      $("#form-signin").submit(function(event){
+          event.preventDefault();
+          var latitude = $("#inputLatitude").val();
+          var longitude = $("#inputLongitude").val();
+          var floorlevel = $("#inputFloorlevel").val();
+          console.log("test")
+          if( latitude != "" && longitude != "" && floorlevel != "" )
+          {
+            event.preventDefault();
+            console.log("test");
+            window.location.href = "dashboard2.html?latitude=" + latitude + "&longitude=" + longitude + "" + "&floorlevel=" + floorlevel;
+          }
+      });
+    });
+    </script>
+
+  </body>
+</html>
