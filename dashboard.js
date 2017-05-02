@@ -76,9 +76,9 @@ function getToiletsFromMazemap(table){
 
         var href2 = endlat.toString().substring(0, 10) + " " + endlng.toString().substring(0, 10);
 
-        var string = '<tr><td class="col-md-2">' + id + '</td><td class="col-md-1" align="right">' + date + '</td><td class="col-md-1" align="right">' + visits + '</td>' +
-        '<td class="col-md-1" align="center"><input type="hidden" value="' + value + '"/><span class="' + icon + '" aria-hidden="true"></span></td>' +
-        '<td class="col-md-1" align="center">' + endfloor + '</td><td class="col-md-1" align="center"><a href="' + href + '" class="btn btn-info btn-xs">map</a></td></tr>';
+        // var string = '<tr><td class="col-md-2">' + id + '</td><td class="col-md-1" align="right">' + date + '</td><td class="col-md-1" align="right">' + visits + '</td>' +
+        // '<td class="col-md-1" align="center"><input type="hidden" value="' + value + '"/><span class="' + icon + '" aria-hidden="true"></span></td>' +
+        // '<td class="col-md-1" align="center">' + endfloor + '</td><td class="col-md-1" align="center"><a href="' + href + '" class="btn btn-info btn-xs">map</a></td></tr>';
         //finalstring += string;
 
         var floorId = results["features"][i]["properties"]["floorId"];

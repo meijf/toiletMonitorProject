@@ -51,7 +51,7 @@ body {
 }
 
 .masthead-nav > li {
-  display: inline-block;
+  display: inline-block !important;
 }
 .masthead-nav > li + li {
   margin-left: 20px;
