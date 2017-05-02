@@ -123,7 +123,7 @@ function getToiletsFromMazemap(table){
         var endfloor = $(this).find("td").eq(5).html();
         var href = "map.html?view=findtoilet" + "&startlat=" + startlat + "&startlng=" + startlng + "&startfloor=" + startfloor + "&endlat=" + endlat + "&endlng=" + endlng + "&endfloor=" + endfloor;
         $(this).find("td").eq(6).empty();
-        $(this).find("td").eq(6).append('<a href="' + href + '" class="btn btn-info btn-xs">map</a> <a href="#" class="btn btn-warning btn-xs">report</a>');
+        $(this).find("td").eq(6).append('<a href="' + href + '" class="btn btn-info btn-xs">MAP</a> <a href="#" class="btn btn-warning btn-xs">REPORT</a>');
       });
 
       return (
