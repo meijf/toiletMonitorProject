@@ -51,6 +51,7 @@ function findToilet(){
 	Maze.Instancer.getCampus(1).then(function(campus){
 		campus.addTo(map).setActive().then( function(c) {
 			map.getZLevelControl().show();
+			map.setZLevel(parseInt(getAllUrlParams().startfloor));
 		});
 	});
 
@@ -92,7 +93,6 @@ function findToilet(){
 	).then(function(featGroup){
 	    featGroup.addTo(map);
 	    map.fitBounds(featGroup.getBounds());
-	    map.setZLevel(parseInt(getAllUrlParams().startfloor));
 	});
 
 	// Maze.Route.getGeoJsonRoute(

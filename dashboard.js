@@ -1,19 +1,15 @@
 
+function getToiletsFromMazemap(table){
+
 function randomDate(start, end) {
   var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "June",
   "July", "Aug", "Sept", "Oct", "Nov", "Dec"
     ];
   var date = new Date(new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime())));
   var date = new Date(date);
-  return date.getDate() + '-' + monthNames[(date.getMonth())] + '-' +  date.getFullYear();
+  // return date.getDate() + '-' + monthNames[(date.getMonth())] + '-' +  date.getFullYear();
+  return date.getFullYear() + "/" + monthNames[(date.getMonth())] + "/" + date.getDate();
 }
-
-$('#example').append(
-
-  '<tr><td class="col-md-2">' + "id" + '</td><td class="col-md-1" align="right">' + "visits" + '</td><td class="col-md-1" align="right">' + "date" + '</td>' +
-  '<td class="col-md-1" align="center"><input type="hidden" value="' + "value" + '"/><span class="' + "icon" + '" aria-hidden="true"></span></td>' +
-  '<td class="col-md-1" align="center"><a href="' + "href" + '" class="btn btn-info btn-xs">map</a></td></tr>'
-)
 
 Maze.Data.getPoisByCategoryAndCampusId(9, 1).then(function(results){
   // console.log(results["features"][0]["geometry"]["type"])
@@ -37,7 +33,7 @@ Maze.Data.getPoisByCategoryAndCampusId(9, 1).then(function(results){
     // ];
     var finalstring = "";
 
-    for (i = 0; i < 10; i++) {
+    for (i = 0; i < 597; i++) {
       var lat;
       var lng;
       if(results["features"][i]["geometry"]["type"] == "Point"){
@@ -67,7 +63,6 @@ Maze.Data.getPoisByCategoryAndCampusId(9, 1).then(function(results){
         lng = xmin + ((xmax-xmin)/2);
       }
 
-
       //var id = toilets[i+2][2] //Math.floor((Math.random() * 9999) + 1000);
       var id = results["features"][i]["properties"]["identifier"];
       var visits = Math.floor((Math.random() * 100));
@@ -93,19 +88,69 @@ Maze.Data.getPoisByCategoryAndCampusId(9, 1).then(function(results){
       var endfloor = results["features"][i]["properties"]["zLevel"];
       var href = "map.html?view=findtoilet" + "&startlat=" + startlat + "&startlng=" + startlng + "&startfloor=" + startfloor + "&endlat=" + endlat + "&endlng=" + endlng + "&endfloor=" + endfloor;
 
-      var string = '<tr><td class="col-md-2">' + id + '</td><td class="col-md-1" align="right">' + visits + '</td><td class="col-md-1" align="right">' + date + '</td>' +
+      var href2 = endlat.toString().substring(0, 10) + " " + endlng.toString().substring(0, 10);
+
+      var string = '<tr><td class="col-md-2">' + id + '</td><td class="col-md-1" align="right">' + date + '</td><td class="col-md-1" align="right">' + visits + '</td>' +
       '<td class="col-md-1" align="center"><input type="hidden" value="' + value + '"/><span class="' + icon + '" aria-hidden="true"></span></td>' +
-      '<td class="col-md-1" align="center"><a href="' + href + '" class="btn btn-info btn-xs">map</a></td></tr>';
-      finalstring += string;
+      '<td class="col-md-1" align="center">' + endfloor + '</td><td class="col-md-1" align="center"><a href="' + href + '" class="btn btn-info btn-xs">map</a></td></tr>';
+      //finalstring += string;
+
+      var floorId = results["features"][i]["properties"]["floorId"];
+      var totalrow = 0;
+
+      if(floorId == "301" || floorId == "374" || floorId == "168" || floorId == "155" || floorId == "349"){
+        //finalstring += string;
+
+        table.row.add( {
+          "toilets": id,
+          "cleaning": date,
+          "visits": visits,
+          "available": value,
+          "floor":  endfloor,
+          "map": href2
+        })
+        .draw();
+        //
+        // $('#example_filter > label > input').addClass("form-control")
+        // $('#example_filter > label > input').attr("placeholder", "Search")
+        // $('#example_filter > label').before("<span class='glyphicon glyphicon-search' aria-hidden='true'></span>");
+      //  $('#example tr td:last-child' ).append('<a href="' + href + '" class="btn btn-info btn-xs">map</a>')
+
+        totalrow += 1;
       }
+    }
 
-      // if(true){
-      //
-      // }
+    $('#example > tbody  > tr').each(function() {
+      var getvalue = $(this).find("td").eq(3).html();
+      if (getvalue == 1){
+        $(this).find("td").eq(3).empty();
+        $(this).find("td").eq(3).append('<input type="hidden" value="' + getvalue + '"/><span class="glyphicon glyphicon glyphicon-ok-circle" style="color:limegreen" aria-hidden="true"></span>')
+      } else {
+        $(this).find("td").eq(3).empty();
+        $(this).find("td").eq(3).append('<input type="hidden" value="' + getvalue + '" style="color:limegreen"/><span class="glyphicon glyphicon glyphicon glyphicon-remove-circle" style="color:red" aria-hidden="true"></span>')
+      }
+      $(this).find("td").eq(2).css("textAlign", "right");
+      $(this).find("td").eq(3).css("textAlign", "center");
+      $(this).find("td").eq(4).css("textAlign", "right");
+      $(this).find("td").eq(5).css("textAlign", "center");
 
-      return (
-          finalstring
-      )
+      var startlat = (63.4183432 + 63.4181158) / 2;
+      var startlng = (10.4013652 + 10.4021806) / 2;
+      var getlatlng = $(this).find("td").eq(5).html();
+      var endlat = getlatlng.substring(0, 10);
+      var endlng = getlatlng.substring(11);
+      var endfloor = $(this).find("td").eq(4).html();
+      var href = "map.html?view=findtoilet" + "&startlat=" + startlat + "&startlng=" + startlng + "&startfloor=" + startfloor + "&endlat=" + endlat + "&endlng=" + endlng + "&endfloor=" + endfloor;
+      $(this).find("td").eq(5).empty();
+      $(this).find("td").eq(5).append('<a href="' + href + '" class="btn btn-info btn-xs">map</a>');
+
+    });
+
+    return (
+        finalstring
+    )
   });
 
 })
+
+}

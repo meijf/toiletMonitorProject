@@ -195,7 +195,6 @@ body {
 }
 
 #example_filter{
-  visibility: hidden !important;
   float:left !important;
 }
 
