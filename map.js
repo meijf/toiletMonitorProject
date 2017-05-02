@@ -55,26 +55,14 @@ function findToilet(){
 		});
 	});
 
-
-	//var startLatLng = [63.41804344188158, 10.40383815765381];
-	//var endLatLng = [63.417513935824466, 10.403683690566774];
 	var startLatLng = [getAllUrlParams().startlat, getAllUrlParams().startlng];
-	//var startLatLng = [63.41572, 10.41082]
 	var endLatLng = [getAllUrlParams().endlat, getAllUrlParams().endlng];
-
-
-	//var endLatLng = [63.415676980402125, 10.405869829535737];
-	//var endLatLng = [63.41565222643514, 10.405895839850515];
-	//var endLatLng = [63.415643800920435, 10.40585476549108];
 
 	Maze.marker(startLatLng, {
 	    zLevel: parseInt(getAllUrlParams().startfloor),
 	    offZOpacity: 0.4,
 	    icon: Maze.icon.chub({ color: 'red', glyph: 'walk' })
 	}).addTo(map);
-	// Maze.marker(startLatLng, {
-	// 		icon: Maze.icon.chub({ color: 'red', glyph: 'ambulance' })
-	// }).addTo(map);
 
 	Maze.marker(endLatLng,   {
 	    zLevel: parseInt(getAllUrlParams().endfloor),
@@ -94,82 +82,7 @@ function findToilet(){
 	    featGroup.addTo(map);
 	    map.fitBounds(featGroup.getBounds());
 	});
-
-	// Maze.Route.getGeoJsonRoute(
-	// 	startLatLng, 3,
-	// 	endLatLng, 4,
-	// 	{
-	// 			connectToStart: true,
-	// 			connectToEnd: true,
-	// 	}
-	// 	).then(function(data){
-	// 			console.log(data);
-	// 	});
-
 }
-
-function viewToilet(){
-	Maze.Instancer.getCampus(1).then(function(campus){
-		campus.addTo(map).setActive().then( function(c) {
-			map.setZLevel(1);
-			map.getZLevelControl().show();
-		});
-	});
-	var marker = Maze.marker([63.41638, 10.40939], {
-	    icon: Maze.icon.bubble({
-	        color: 'teal',
-	        glyph: 'phone',
-	        glyphColor: 'teal'
-	    }),
-	    zLevel: 3,
-	    offZOpacity: 0.6
-	});
-
-	var marker2 = Maze.marker([63.41572, 10.41082], {
-	    icon: Maze.icon.chub({
-	        color: 'red',
-	        glyph: 'ambulance'
-	    })
-	});
-
-	marker.addTo(map);
-	marker2.addTo(map);
-
-	map.fitBounds(Maze.latLngBounds(marker.getLatLng(), marker2.getLatLng()));
-}
-
-function view2(){
-	var marker = Maze.marker([63.43298, 10.40748], {
-		icon: Maze.icon.chub({
-			color: 'orange',
-			glyph: 'printer',
-			glyphColor: 'white'
-		}),
-		zLevel: 4,
-		offZOpacity: 0.6
-	}).addTo(map);
-
-	var popup = Maze.popup().setContent('<p><strong>Hello world!</strong><br />I am a printer, and I am located <i>exactly</i> at this indoor location!</p>');
-
-	marker.bindPopup(popup); //Bind the popup to the specific marker
-
-	Maze.Instancer.getCampus(47).then(function(campus){
-		map.fitBounds( campus.getBounds() );
-		campus.addTo(map).setActive().then( function(c) {
-			map.setZLevel(4);
-			map.getZLevelControl().show();
-
-			marker.openPopup(); //For convenience, we want to auto-show this popup
-		});
-	});
-
-}
-
-
-//viewAllToilets();
-//findToilet();
-//viewToilet();
-//view2();
 
 function getAllUrlParams(url) {
 
@@ -232,7 +145,6 @@ function getAllUrlParams(url) {
 
   return obj;
 }
-
 
 //console.log(getAllUrlParams().startlat); // 'shirt'
 //getAllUrlParams('http://test.com/?a=abc').a; // 'abc'
