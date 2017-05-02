@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Toilet Monitor</title>
+    <link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.10/css/jquery.dataTables.css">
+    <link href="css/cover.css" rel="stylesheet">
+    <script type='text/javascript' src='https://api.mazemap.com/js/v1.2.5/mazemap.min.js'></script>
+  </head>
+  <body>
+
+  <div class="site-wrapper">
+    <div class="site-wrapper-inner">
+      <div class="cover-container">
+
+        <div class="masthead clearfix">
+          <div class="inner">
+            <h3 class="masthead-brand">Toilet Monitor</h3>
+            <nav>
+              <ul class="nav masthead-nav">
+                <li class="active"><a href="notification.html"><span id="totalnotification" class="badge" style="background-color: orange"></span> Notifications</a></li>
+                <li><a href="dashboard2.html">Toilets</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="index.html">Log Out</a></li>
+              </ul>
+            </nav>
+          </div>
+
+          <div class="inner">
+            <h1 class="page-header">Notifications</h1>
+            <div class="style-1" id="notifications"  style="overflow: auto; overflow-x: hidden; height: 400px">
+
+              <!-- <div class="alert alert-info">
+                <strong>Needs cleaning!</strong><a href="' + href + '" class="btn btn-info btn-xs" style="float: right">map</a>
+              </div>
+              <div class="alert alert-warning">
+                <strong>Empty toilet paper!</strong>
+              </div>
+              <div class="alert alert-danger">
+                <strong>Toilet needs check!</strong>
+              </div> -->
+
+          </div>
+        </div>
+
+        <div class="mastfoot">
+          <div class="inner">
+            <p>Toilet Monitor © 2017</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+  <script>
+  Maze.Data.getPoisByCategoryAndCampusId(9, 1).then(function(results){
+      var counterdisplay = 0;
+      for (i = 0; i < 597; i++) {
+        var lat;
+        var lng;
+        if(results["features"][i]["geometry"]["type"] == "Point"){
+          lat = results["features"][i]["geometry"]["coordinates"][1];
+          lng = results["features"][i]["geometry"]["coordinates"][0];
+        } else {
+          var xmin = results["features"][i]["geometry"]["coordinates"][0][0][0];
+          var xmax = results["features"][i]["geometry"]["coordinates"][0][0][0];
+          var ymin = results["features"][i]["geometry"]["coordinates"][0][0][1];
+          var ymax = results["features"][i]["geometry"]["coordinates"][0][0][1];
+          for (j = 1; j < results["features"][i]["geometry"]["coordinates"][0].length; j++){
+            if (results["features"][i]["geometry"]["coordinates"][0][j][0] < xmin){
+              xmin = results["features"][i]["geometry"]["coordinates"][0][j][0]
+            }
+            if (results["features"][i]["geometry"]["coordinates"][0][j][0] > xmax){
+              xmax = results["features"][i]["geometry"]["coordinates"][0][j][0]
+            }
+            if (results["features"][i]["geometry"]["coordinates"][0][j][1] < ymin){
+              ymin = results["features"][i]["geometry"]["coordinates"][0][j][1]
+            }
+            if (results["features"][i]["geometry"]["coordinates"][0][j][1] > ymax){
+              ymax = results["features"][i]["geometry"]["coordinates"][0][j][1]
+            }
+          }
+          lat = ymin + ((ymax-ymin)/2);
+          lng = xmin + ((xmax-xmin)/2);
+        }
+        var reportbutton = '<a href="#" class="btn btn-warning btn-xs">report</a>'
+        var id = results["features"][i]["properties"]["name"];
+        var startlat = (63.4183432 + 63.4181158) / 2
+        var startlng = (10.4013652 + 10.4021806) / 2
+        var startfloor = "1"
+        var endlat = lat;
+        var endlng = lng;
+        var endfloor = results["features"][i]["properties"]["zLevel"];
+        var href = "map.html?view=findtoilet" + "&startlat=" + startlat + "&startlng=" + startlng + "&startfloor=" + startfloor + "&endlat=" + endlat + "&endlng=" + endlng + "&endfloor=" + endfloor;
+
+        var floorId = results["features"][i]["properties"]["floorId"];
+        if(floorId == "301" || floorId == "374" || floorId == "168" || floorId == "155" || floorId == "349"){
+          if (counterdisplay == 0){
+            $("#notifications").append('<div class="alert alert-danger"><strong>Toilet needs check! </strong>Toilet: ' + id +
+            ' (No activities in the past 30 days)<div style="float: right"><a href="' + href + '" class="btn btn-info btn-xs">map</a> ' + reportbutton + '</div></div>');
+          }
+          if (counterdisplay == 1){
+            $("#notifications").append('<div class="alert alert-danger"><strong>Toilet needs check! </strong>Toilet: ' + id +
+            ' (User report: Toilet clogged)<div style="float: right"><a href="' + href + '" class="btn btn-info btn-xs">map</a> ' + reportbutton + '</div></div>');
+          }
+          if (counterdisplay >= 2 && counterdisplay < 5){
+            $("#notifications").append('<div class="alert alert-warning"><strong>Empty toilet paper! </strong>Toilet: ' + id +
+            '<div style="float: right"><a href="' + href + '" class="btn btn-info btn-xs">map</a> ' + reportbutton + '</div></div>');
+          }
+          if (counterdisplay >= 5){
+            $("#notifications").append('<div class="alert alert-info"><a href="#" class="btn btn-primary btn-xs">start</a> <a href="#" class="btn btn-success btn-xs">finish</a> <strong>Needs cleaning! </strong>Toilet: ' + id +
+            '<div style="float: right"><a href="' + href + '" class="btn btn-info btn-xs">map</a> ' + reportbutton + '</div></div>');
+          }
+          counterdisplay += 1;
+        }
+      }
+      $("#totalnotification").text($("#notifications").children().length);
+  })
+
+  </script>
+  </body>
+</html>

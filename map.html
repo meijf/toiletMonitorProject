@@ -21,6 +21,7 @@
               <h3 class="masthead-brand">Toilet Monitor</h3>
               <nav>
                 <ul class="nav masthead-nav">
+                  <li><a href="notification.html"><span id="totalnotification" class="badge" style="background-color: orange">14</span> Notifications</a></li>
                   <li class="active"><a href="dashboard.html">Toilets</a></li>
                   <li><a href="about.html">About</a></li>
                   <li><a href="index.html">Log Out</a></li>
@@ -49,6 +50,34 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
     <script src="map.js"></script>
-
+    <script>
+    $(document).ready( function () {
+      if(getAllUrlParams().view == "alltoilets"){
+        viewAllToilets()
+      }
+      if (getAllUrlParams().view == "findtoilet"){
+        findToilet();
+      }
+      window.onload = function() {
+          if(!window.location.hash) {
+              window.location = window.location + '#loaded';
+              //5 sec
+            //   setTimeout(function () {
+            //      window.location.reload();
+            //  }, 1000);
+          }
+      }
+    });
+    </script>
+    <!-- <script>
+    $(document).ready( function () {
+      if(getAllUrlParams().view == "alltoilets"){
+        viewAllToilets()
+      }
+      if (getAllUrlParams().view == "findtoilet"){
+        findToilet();
+      }
+    });
+    </script> -->
   </body>
 </html>

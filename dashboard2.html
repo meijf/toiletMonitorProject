@@ -21,7 +21,8 @@
             <h3 class="masthead-brand">Toilet Monitor</h3>
             <nav>
               <ul class="nav masthead-nav">
-                <li class="active"><a href="dashboard.html">Toilets</a></li>
+                <li><a href="notification.html"><span id="totalnotification" class="badge" style="background-color: orange">14</span> Notifications</a></li>
+                <li class="active"><a href="dashboard2.html">Toilets</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="index.html">Log Out</a></li>
               </ul>
@@ -37,14 +38,13 @@
                       <th class="col-md-2">Toilet</th>
                       <th class="col-md-1">Last cleaning</th>
                       <th class="col-md-1">Total visits</th>
+                      <th class="col-md-1">Toiletpaper level</th>
                       <th class="col-md-1">Available</th>
                       <th class="col-md-1">Floor</th>
                       <th class="col-md-1"></th>
                     </tr>
                   </thead>
                   <tbody>
-
-
                   </tbody>
                   <!-- <tfoot>
       							<tr>
@@ -80,12 +80,13 @@
         dom: "frtiS",
         scrollY: 305,
         columnDefs: [
-            { "orderable": false, "targets": 5 }
+            { "orderable": false, "targets": 6 }
           ],
         "columns": [
                 { "data": "toilets"},
                 { "data": "cleaning"},
                 { "data": "visits"},
+                { "data": "paperlevel", "orderDataType": "dom-text" },
                 { "data": "available", "orderDataType": "dom-text" },
                 { "data": "floor"},
                 { "data": "map"}
@@ -102,6 +103,7 @@
       $('#example_filter > label > input').addClass("form-control")
       $('#example_filter > label > input').attr("placeholder", "Search")
       $('#example_filter > label').before("<span class='glyphicon glyphicon-search' aria-hidden='true'></span>");
+      $('.dataTables_scrollBody').addClass("style-1")
 
       getToiletsFromMazemap(table);
 

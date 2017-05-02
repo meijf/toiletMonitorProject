@@ -25,7 +25,7 @@ console.save = function(data, filename){
  }
 })(console)
 
-var map = Maze.map('mazemap-container', { campusloader: false });
+// var map = Maze.map('mazemap-container', { campusloader: false });
 
 // Maze.Data.getPoisByCategoryAndCampusId(9, 1).then( data => {
 // 		console.log(data); // Raw data about the campuses.
@@ -36,6 +36,7 @@ var map = Maze.map('mazemap-container', { campusloader: false });
 // })
 
 function viewAllToilets(){
+	var map = Maze.map('mazemap-container', { campusloader: false });
 	//viewing all the toilets on campus
 	Maze.Instancer.getCampus(1).then(function(campus){
 		map.fitBounds(campus.getBounds());
@@ -48,6 +49,7 @@ function viewAllToilets(){
 }
 
 function findToilet(){
+	var map = Maze.map('mazemap-container', { campusloader: false });
 	Maze.Instancer.getCampus(1).then(function(campus){
 		campus.addTo(map).setActive().then( function(c) {
 			map.getZLevelControl().show();
@@ -149,9 +151,9 @@ function getAllUrlParams(url) {
 //console.log(getAllUrlParams().startlat); // 'shirt'
 //getAllUrlParams('http://test.com/?a=abc').a; // 'abc'
 
-if(getAllUrlParams().view == "alltoilets"){
-	viewAllToilets()
-}
-if (getAllUrlParams().view == "findtoilet"){
-	findToilet();
-}
+// if(getAllUrlParams().view == "alltoilets"){
+// 	viewAllToilets()
+// }
+// if (getAllUrlParams().view == "findtoilet"){
+// 	findToilet();
+// }
