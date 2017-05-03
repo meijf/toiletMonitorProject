@@ -58,13 +58,18 @@ function getToiletsFromMazemap(table){
         var id = results["features"][i]["properties"]["name"];
         var visits = Math.floor((Math.random() * 100));
         var date = randomDate(new Date(2017, 3, 1), new Date());
-        var level = Math.floor((Math.random() * 3));
-        var availability = Math.floor((Math.random() * 1000))%4;
+        // var level = Math.floor((Math.random() * 2));
+        var level = 1;
+        var availability = Math.floor((Math.random() * 1000))%5;
+        var levelrandom = Math.floor((Math.random() * 1000))%5;
         var value = 1;
         var icon = 'glyphicon glyphicon glyphicon-ok-circle" style="color:limegreen'
         if (availability == 0){
           value = 0;
           icon = 'glyphicon glyphicon glyphicon glyphicon-remove-circle" style="color:red';
+        }
+        if (levelrandom == 0){
+          level = 0;
         }
         var startlat = (63.4183432 + 63.4181158) / 2
         var startlng = (10.4013652 + 10.4021806) / 2
@@ -100,7 +105,8 @@ function getToiletsFromMazemap(table){
 
       $('#example > tbody  > tr').each(function() {
         var getlevel = $(this).find("td").eq(3).html();
-        var toiletpaper = ["Full", "Medium", "Low"];
+        // var toiletpaper = ["Full", "Medium", "Low"];
+        var toiletpaper = ["Empty", "OK"];
         $(this).find("td").eq(3).empty();
         $(this).find("td").eq(3).append('<input type="hidden" value="' + getlevel + '"/><span">' + toiletpaper[getlevel] + '</span>')
         var getvalue = $(this).find("td").eq(4).html();
