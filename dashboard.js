@@ -60,13 +60,25 @@ function getToiletsFromMazemap(table){
         var date = randomDate(new Date(2017, 3, 1), new Date());
         // var level = Math.floor((Math.random() * 2));
         var level = 1;
-        var availability = Math.floor((Math.random() * 1000))%5;
+        // var availability = Math.floor((Math.random() * 1000))%9;
+        var availability = Math.floor((Math.random() * 19));
         var levelrandom = Math.floor((Math.random() * 1000))%5;
-        var value = 1;
-        var icon = 'glyphicon glyphicon glyphicon-ok-circle" style="color:limegreen'
-        if (availability == 0){
-          value = 0;
-          icon = 'glyphicon glyphicon glyphicon glyphicon-remove-circle" style="color:red';
+        var value = 4;
+        // var icon = 'glyphicon glyphicon glyphicon-ok-circle" style="color:limegreen'
+        if (availability == 3){
+          value = 3;
+        }
+        if (availability == 1){
+          value = 1;
+          // icon = 'glyphicon glyphicon glyphicon glyphicon-remove-circle" style="color:red';
+        }
+        if(availability == 0){
+          value = 0
+          // icon = 'glyphicon glyphicon-wrench'
+        }
+        if(availability == 2 || availability == 4){
+          value = 2;
+          // icon = 'glyphicon glyphicon-wrench'
         }
         if (levelrandom == 0){
           level = 0;
@@ -106,19 +118,39 @@ function getToiletsFromMazemap(table){
       $('#example > tbody  > tr').each(function() {
         var getlevel = $(this).find("td").eq(3).html();
         // var toiletpaper = ["Full", "Medium", "Low"];
-        var toiletpaper = ["Empty", "OK"];
+        var toiletpaper = ["EMPTY", "OK"];
         $(this).find("td").eq(3).empty();
-        $(this).find("td").eq(3).append('<input type="hidden" value="' + getlevel + '"/><span">' + toiletpaper[getlevel] + '</span>')
+        var redtext = 'style="color: red"';
+        if (getlevel == 1){
+          redtext = "";
+        }
+        $(this).find("td").eq(3).append('<input type="hidden" value="' + getlevel + '"/><span ' + redtext + '>' + toiletpaper[getlevel] + '</span>')
         var getvalue = $(this).find("td").eq(4).html();
-        if (getvalue == 1){
+        if (getvalue == 4){
           $(this).find("td").eq(4).empty();
           $(this).find("td").eq(4).append('<input type="hidden" value="' + getvalue + '"/><span class="glyphicon glyphicon glyphicon-ok-circle" style="color:limegreen" aria-hidden="true"></span>')
-        } else {
+        }
+        if (getvalue == 3){
           $(this).find("td").eq(4).empty();
-          $(this).find("td").eq(4).append('<input type="hidden" value="' + getvalue + '" style="color:limegreen"/><span class="glyphicon glyphicon glyphicon glyphicon-remove-circle" style="color:red" aria-hidden="true"></span>')
+          $(this).find("td").eq(4).append('<input type="hidden" value="' + getvalue + '"/><span class="glyphicon glyphicon glyphicon-ok-circle" style="color:limegreen; display:inline-block; width: 20px;" aria-hidden="true"></span>')
+          $(this).find("td").eq(4).append('<input type="hidden" value="' + getvalue + '"/><span class="glyphicon glyphicon-flag" style="color:red" aria-hidden="true"></span>')
+        }
+        if(getvalue == 2) {
+          $(this).find("td").eq(4).empty();
+          $(this).find("td").eq(4).append('<input type="hidden" value="' + getvalue + '"/><span class="glyphicon glyphicon glyphicon glyphicon-remove-circle" style="color:red" aria-hidden="true"></span>')
+        }
+        if (getvalue == 1){
+          $(this).find("td").eq(4).empty();
+          $(this).find("td").eq(4).append('<input type="hidden" value="' + getvalue + '"/><span class="glyphicon glyphicon glyphicon glyphicon-remove-circle" style="color:red; display:inline-block; width: 20px;" aria-hidden="true"> </span>')
+          $(this).find("td").eq(4).append('<input type="hidden" value="' + getvalue + '"/><span class="glyphicon glyphicon-tint" style="color:#5bc0de" aria-hidden="true"></span>')
+        }
+        if (getvalue == 0){
+          $(this).find("td").eq(4).empty();
+          $(this).find("td").eq(4).append('<input type="hidden" value="' + getvalue + '"/><span class="glyphicon glyphicon glyphicon glyphicon-remove-circle" style="color:red; display:inline-block; width: 20px;" aria-hidden="true"> </span>')
+          $(this).find("td").eq(4).append('<input type="hidden" value="' + getvalue + '"/><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>')
         }
         $(this).find("td").eq(2).css("textAlign", "right");
-        $(this).find("td").eq(4).css("textAlign", "center");
+        // $(this).find("td").eq(4).css("textAlign", "center");
         $(this).find("td").eq(5).css("textAlign", "right");
         $(this).find("td").eq(6).css("textAlign", "center");
         var startlat = (63.4183432 + 63.4181158) / 2;
@@ -129,7 +161,8 @@ function getToiletsFromMazemap(table){
         var endfloor = $(this).find("td").eq(5).html();
         var href = "map.html?view=findtoilet" + "&startlat=" + startlat + "&startlng=" + startlng + "&startfloor=" + startfloor + "&endlat=" + endlat + "&endlng=" + endlng + "&endfloor=" + endfloor;
         $(this).find("td").eq(6).empty();
-        $(this).find("td").eq(6).append('<a href="' + href + '" class="btn btn-info btn-xs">MAP</a> <a href="#" class="btn btn-warning btn-xs">REPORT</a>');
+        var toiletname = $(this).find("td").eq(0).html();
+        $(this).find("td").eq(6).append('<a href="' + href + '" class="btn btn-info btn-xs">MAP</a> <a href="report.html?toilet='+ toiletname +'" class="btn btn-warning btn-xs">REPORT</a>');
       });
 
       return (

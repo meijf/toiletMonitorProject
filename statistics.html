@@ -9,6 +9,7 @@
     <link href="css/cover.css" rel="stylesheet">
     <link rel="stylesheet" href="https://api.mazemap.com/js/v1.2.5/mazemap.min.css">
     <script type='text/javascript' src='https://api.mazemap.com/js/v1.2.5/mazemap.min.js'></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   </head>
   <body>
 
@@ -22,7 +23,8 @@
               <nav>
                 <ul class="nav masthead-nav">
                   <li><a href="notification.html"><span id="totalnotification" class="badge" style="background-color: orange">14</span> Notifications</a></li>
-                  <li class="active"><a href="dashboard2.html">Toilets</a></li>
+                  <li><a href="dashboard2.html">Toilets</a></li>
+                  <li class="active"><a href="statistics.html">Statistics</a></li>
                   <li><a href="report.html">Report</a></li>
                   <li><a href="about.html">About</a></li>
                   <li><a href="index.html">Log Out</a></li>
@@ -31,9 +33,8 @@
             </div>
 
             <div class="inner">
-              <h1 class="page-header">Map</h1>
-              <div class="inner" id='mazemap-container' style="width: 100%; height: 400px">
-              </div>
+              <h1 class="page-header">Usage all toilets</h1>
+                <div id="chart_div" style="width: 100%; height: 400px;"></div>
             </div>
 
           </div>
@@ -51,34 +52,34 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
     <script src="map.js"></script>
-    <script>
-    $(document).ready( function () {
-      if(getAllUrlParams().view == "alltoilets"){
-        viewAllToilets()
-      }
-      if (getAllUrlParams().view == "findtoilet"){
-        findToilet();
-      }
-      window.onload = function() {
-          if(!window.location.hash) {
-              window.location = window.location + '#loaded';
-              //5 sec
-            //   setTimeout(function () {
-            //      window.location.reload();
-            //  }, 1000);
-          }
-      }
-    });
-    </script>
-    <!-- <script>
-    $(document).ready( function () {
-      if(getAllUrlParams().view == "alltoilets"){
-        viewAllToilets()
-      }
-      if (getAllUrlParams().view == "findtoilet"){
-        findToilet();
-      }
-    });
-    </script> -->
+    <script type="text/javascript">
+         google.charts.load('current', {'packages':['corechart']});
+         google.charts.setOnLoadCallback(drawChart);
+
+         function drawChart() {
+           var data = google.visualization.arrayToDataTable([
+             ['Month', 'Total visits'],
+             ['Sept16',  1000],
+             ['Oct16',  1170],
+             ['Nov16',  660],
+             ['Dec16',  1030],
+             ['Jan17',  400],
+             ['Feb17',  460],
+             ['Mar17',  1120],
+             ['Apr17',  540],
+             ['May17',  540]
+           ]);
+
+           var options = {
+
+             hAxis: {title: 'Month',  titleTextStyle: {color: '#333'}},
+             vAxis: {minValue: 0}
+           };
+
+           var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+           chart.draw(data, options);
+         }
+      </script>
+
   </body>
 </html>

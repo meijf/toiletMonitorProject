@@ -23,6 +23,7 @@
               <ul class="nav masthead-nav">
                 <li><a href="notification.html"><span id="totalnotification" class="badge" style="background-color: orange">14</span> Notifications</a></li>
                 <li class="active"><a href="dashboard2.html">Toilets</a></li>
+                <li><a href="report.html">Report</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="index.html">Log Out</a></li>
               </ul>
@@ -36,13 +37,13 @@
             <table id="example" class="display" width="100%">
                 <thead>
                   <tr>
-                    <th class="col-md-2">Toilet</th>
+                    <th class="col-md-1">Toilet</th>
                     <th class="col-md-1">Last cleaning</th>
                     <th class="col-md-1">Total visits</th>
                     <th class="col-md-1">Toiletpaper status</th>
                     <th class="col-md-1">Available</th>
                     <th class="col-md-1">Floor</th>
-                    <th class="col-md-1"></th>
+                    <th class="col-md-2"></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -62,7 +63,7 @@
 
         <div class="mastfoot">
           <div class="inner">
-            <p>Toilet Monitor © 2017</p>
+            <p>Toilet Monitor 2017</p>
           </div>
         </div>
 
@@ -108,6 +109,22 @@
       getToiletsFromMazemap(table);
 
     } );
+
+    function updateNotification(){
+      $("#totalnotification").text("1");
+      // console.log("clicked")
+    }
+    window.onload = function() {
+        if(!window.location.hash) {
+            window.location = window.location + '#loaded';
+            //5 sec
+          //   setTimeout(function () {
+          //     console.log("test")
+          //      updateNotification();
+          //  }, 3000);
+        }
+    }
+
   </script>
   <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
   <script src="dashboard.js"></script>
